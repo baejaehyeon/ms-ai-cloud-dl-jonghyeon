@@ -1,0 +1,67 @@
+Document Intelligence : 다양한 형태의 문서, 양식, 이미지에서 텍스트, 구조, 데이터를 자동으로 정확하게 추출하도록 설계된 클라우드 기반 AI 서비스
+
+1. Azure 리소스 "문서 인텔리전스" 생성
+2. Region은 East US, 가격 책정은 Standard 선택하여 리소스 생성
+3. 리소스로 이동 후, '개요' 탭의 Key와 EndPoint 정보 확인
+4. Document Intelligence Studio로 이동 및 테스트.
+
+* 주요 목표 및 특징
+데이터 구조화: 스캔된 이미지, PDF, 디지털 양식 등 비정형 문서에서 핵심 텍스트, 필드, 테이블을 추출하여 구조화된 데이터 (JSON, CSV 등)로 변환.
+수동 작업 최소화: 사람이 문서를 수동으로 검토하고 데이터를 입력하는 작업을 자동화하여 시간과 비용 절감.
+운영 효율성 극대화: 빠르고 정확한 데이터 추출을 통해 문서 집약적인 비즈니스 프로세스(예: 회계, 고객 온보딩)의 속도 향상.
+정확도: 최첨단 AI 및 머신러닝 모델을 사용하여 복잡한 테이블, 필기 텍스트, 텍스트 필드를 높은 정확도로 추출.
+다국어 지원: 전 세계 다양한 언어로 작성된 문서를 처리.
+유연한 모델: 미리 학습된 모델과 사용자가 직접 커스터마이징할 수 있는 모델을 모두 제공.
+구조 이해: 단순 텍스트 추출을 넘어 문서의 레이아웃, 테이블 구조, 키-값 관계 등 문서의 구조를 이해.
+
+* 모델별 주요 기능
+1. OCR
+Document Intelligence의 OCR: 이 서비스의 Read API는 전통적인 OCR을 넘어선 고성능 텍스트 추출 엔진.
+추출 대상: 문서나 이미지에 있는 모든 인쇄된 텍스트와 필기된 텍스트를 인식.
+차이점: 단순 텍스트 추출을 넘어, 텍스트의 좌표(위치), 언어, 신뢰도 등을 함께 제공.
+
+2. Layout (레이아웃)
+문서의 시각적 구조를 분석하여 텍스트를 구조화.
+추출 대상: 모든 텍스트, 테이블을 정확하게 식별하고 셀 단위로 데이터 추출, 체크박스나 라디오 버튼의 상태를 감지
+활용: 엑셀로 변환이 필요한 보고서나 표 형태의 데이터를 처리할 때 사용.
+
+3. Invoice (송장/청구서)
+목표: 전 세계 다양한 서식의 송장에서 핵심 재무 데이터를 추출.
+추출 대상: 송장 번호, 발행일, 납부 기한, 청구 주소, 배송 주소, 품목 라인 항목(Line Items), 세금, 총 금액 등 재무 시스템에 필요한 정형화된 필드를 추출.
+활용: 회계 자동화 시스템과 직접 연동하여 데이터 입력 작업을 완전히 대체.
+
+4. Contract (계약서)
+목표: 법률/비즈니스 계약서와 같은 복잡한 텍스트 중심 문서에서 핵심 정보를 추출.
+추출 대상: 계약 당사자(Parties), 계약 조건, 유효 날짜, 종료 날짜, 계약 금액, 특정 조항 등 법률 및 비즈니스 관련 중요한 필드를 식별.
+활용: 계약 관리 시스템(CLM)에서 계약 조건을 빠르게 검색하고 분석하는 데 사용.
+
+5. ID (신분증)
+정부 발행 신분증(운전면허증, 여권, 주민등록증 등)에서 개인 정보를 안전하게 추출.
+추출 대상: 이름, 생년월일, 만료일, 주소, 문서 번호, 발급 국가 등 KYC(고객 알기) 프로세스에 필요한 공식 필드.
+활용: 금융 서비스, 여행 산업, 신원 확인이 필요한 모든 분야의 온보딩 절차를 자동화하고 규정 준수를 지원.
+
+6. Credit Card (신용카드)
+신용카드 이미지에서 주요 정보를 추출.
+추출 대상: 카드 번호, 소유자 이름, 만료 월 및 연도 등 결제에 필요한 핵심 정보.
+활용: 고객이 신용카드 사진을 업로드할 때 정보 입력 필드를 자동으로 채워 편리성을 높이는 데 사용됨. (보안을 위해 PCI DSS 준수 환경에서 사용되어야 함).
+
+
+
+================================================================================
+REST API - PostMan 테스트
+================================================================================
+* 요청은 POST(분석 요청) => GET(분석 결과 요청)으로 2단계에 나누어 이루어진다.
+* 참고 : https://learn.microsoft.com/ko-kr/azure/ai-services/document-intelligence/how-to-guides/use-sdk-rest-api?view=doc-intel-4.0.0&preserve-view=true&tabs=windows&pivots=programming-language-rest-api
+* Document Intelligence Studio의 각 서비스들에 대한 modelId는 URL 참고 => https://learn.microsoft.com/ko-kr/azure/ai-services/document-intelligence/model-overview?view=doc-intel-4.0.0
+* 아래 endPoint와 API_KEY는 Azure Portal 문서 인텔리전스 리소스 개요 탭 확인
+
+(1) 분석 요청 [POST]
+1. EndPoint => https://{endPoint}/documentintelligence/documentModels/{modelId}:analyze?_overload=analyzeDocument&api-version=2024-11-30 
+2. Header에 Content-Type : application/json과 Ocp-Apim-Subscription-Key: {API_KEY} 세팅. 
+3. Body에 {"urlSource" : "http://www.naver.com"}과 같이 분석 대상 URL 정보 입력
+
+(2) 분석 결과 요청 [GET]
+1. EndPoint => 위 POST 요청의 응답 헤더 Operation-Location에 분석 결과 URL 정보 참고
+2. Header에 Ocp-Apim-Subscription-Key : {API_KEY} 세팅.
+
+PS. Postman Collection 클릭 후, Authorization에서 Auth Type을 API-KEY로 선택 후, API KEY 등록하면 각 요청에서 끌어다 사용 가능.
