@@ -3,7 +3,7 @@ Azure AI Foundry : 엔터프라이즈급 AI 개발 및 배포를 위한 통합 �
 
 * 리소스 생성 및 실습 순서
 1. Azure 리소스 "foundry" 검색 및 생성
-2. Region은 East US 2 선택 후 리소스 생성
+2. Region은 East US 2 선택 후 리소스 생성 (East US 아님 주의!)
 3. 리소스로 이동 후, 개요 탭 "Go to Foundry Portal" 클릭하여 이동
 4. 좌측 "미세 조정" 탭 클릭 => 화면 중앙 "AI 서비스 미세조정" 클릭 => "+ 미세 조정" 클릭
 5. "대화 언어 이해" 클릭 => "기존 프로젝트 가져오기" => 라벨링 json 파일 업로드(Ex. CLU-EmailAppDemo.json)

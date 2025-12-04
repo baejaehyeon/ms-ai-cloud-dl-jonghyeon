@@ -1,0 +1,27 @@
+Speech CLI :  Azure AI Speech 서비스와 상호 작용하기 위해 설계된 명령줄 도구.
+별도의 코드 작성 없이 터미널이나 명령 프롬프트에서 간단한 명령을 사용하여
+음성-텍스트 변환(STT), 텍스트-음성 변환(TTS), 음성 번역 등의 Speech 서비스 기능을 테스트하거나 자동화할 수 있음.
+
+* C++ 패키지와 .NET 설치 이유
+Speech CLI는 .NET 기반으로 개발되었고, .NET 런타임은 일부 저수준(Low-level) 시스템 작업을 위해 C++ 라이브러리를 사용함.
+
+* 설치 및 실습 순서 (참고 URL : https://learn.microsoft.com/ko-kr/azure/ai-services/speech-service/spx-basics?tabs=windowsinstall%2Cterminal)
+(1) Visual Studio용 Microsoft Visual C++ 재배포 가능 패키지 설치
+윈도우 기준 우측 URL 브라우저에 입력하면 설치파일 다운로드 됨 => https://aka.ms/vc14/vc_redist.x64.exe
+(2) .NET 8 설치
+윈도우 기준 우측 URL 브라우저에 입력하면 설치파일 다운로드 됨 => https://dotnet.microsoft.com/ko-kr/download/dotnet/thank-you/sdk-8.0.416-windows-x64-installer
+(3) cmd에서, 아래 명령어 입력(Azure AI Speech CLI 도구를 사용자 시스템에 전역적으로(Global하게) 설치)
+dotnet tool install --global Microsoft.CognitiveServices.Speech.CLI
+(4) Key, Region 저장하여, 요청마다 불필요한 입력이 없도록 설정
+spx config @key --set API-KEY
+spx config @region --set eastus
+(5-1) 아래 명령어 입력하여, 한국어 음성 녹음. 녹음 완료되면 Enter 입력
+spx recognize --microphone --language ko-KR
+
+음성 녹음 중, 아래와 같이 RECOGNIZING(녹음중)이 출력되고, 일정 구간이 지나면 RECOGNIZED(녹음 완료)로 최종 텍스트가 보여짐
+RECOGNIZING: 안녕
+RECOGNIZED: 안녕.
+(5-2) 한국어 녹음 시, 영문으로 자동 변환하여 출력
+spx translate --source ko-KR --target en-US --microphone
+(5-3) 텍스트를 원하는 목소리 타입으로 읽어줌. (https://json2video.com/ai-voices/azure/voices/)
+spx synthesize --text "배고파" --speakers --voice "ko-KR-BongJinNeural"
