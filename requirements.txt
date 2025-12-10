@@ -2,3 +2,4 @@ gradio
 azure-cognitiveservices-vision-customvision
 onnx
 onnxruntime
+opencv-python
